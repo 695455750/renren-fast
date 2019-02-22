@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.generator.dao.HhoJokerDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.renren.modules.generator.entity.HhoJokerEntity" id="hhoJokerMap">
+        <result property="id" column="ID"/>
+        <result property="title" column="TITLE"/>
+        <result property="text" column="TEXT"/>
+        <result property="type" column="TYPE"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="sourceUrl" column="SOURCE_URL"/>
+        <result property="heat" column="HEAT"/>
+        <result property="love" column="LOVE"/>
+        <result property="hate" column="HATE"/>
+        <result property="repost" column="REPOST"/>
+    </resultMap>
+
+    <select id="findBest" resultMap="hhoJokerMap" >
+		select * from hho_joker limit 1,10;
+	</select>
+
+    <select id="findRandom" resultMap="hhoJokerMap" >
+		select * from hho_joker where type=#{type} limit #{page},#{limit};
+	</select>
+    <update id="customOpt" parameterType="io.renren.modules.generator.dto.OptDto">
+        update hho_joker set heat = heat + #{heat},love = love+#{love},hate = hate+#{hate},repost = repost + #{repost} where id = #{jId}
+    </update>
+</mapper>
